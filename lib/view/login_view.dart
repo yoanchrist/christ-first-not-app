@@ -32,44 +32,39 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Login")),
-      body: FutureBuilder(
-          future: Firebase.initializeApp(
-              options: DefaultFirebaseOptions.currentPlatform),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.done:
-                return Column(
-                  children: [
-                    TextField(
-                      controller: _email,
-                      decoration: InputDecoration(hintText: 'Email.....'),
-                      enableSuggestions: true,
-                    ),
-                    TextField(
-                      controller: _password,
-                      decoration: InputDecoration(hintText: 'Password....'),
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      obscureText: true,
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        final email = _email.text;
-                        final password = _password.text;
+      body: Column(
+        children: [
+          TextField(
+            controller: _email,
+            decoration: InputDecoration(hintText: 'Email.....'),
+            enableSuggestions: true,
+          ),
+          TextField(
+            controller: _password,
+            decoration: InputDecoration(hintText: 'Password....'),
+            enableSuggestions: false,
+            autocorrect: false,
+            obscureText: true,
+          ),
+          TextButton(
+            onPressed: () async {
+              final email = _email.text;
+              final password = _password.text;
 
-                        final usercredential = await FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                                email: email, password: password);
-                        print(usercredential);
-                      },
-                      child: Text("Login"),
-                    ),
-                  ],
-                );
-              default:
-                return const Text("waitting");
-            }
-          }),
+              final usercredential = await FirebaseAuth.instance
+                  .signInWithEmailAndPassword(email: email, password: password);
+              print(usercredential);
+            },
+            child: Text("Login"),
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/Register/', (route) => false);
+              },
+              child: const Text("you don't have an account yet? SIGNUP here"))
+        ],
+      ),
     );
   }
 }
