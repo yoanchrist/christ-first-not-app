@@ -12,7 +12,8 @@ void main() {
   runApp(MaterialApp(
     routes: {
       "/Register/": (context) => const RegisterView(),
-      "/Login/": (context) => const LoginView()
+      "/Login/": (context) => const LoginView(),
+      "/notes/": (context) => const MyNoteView(),
     },
     title: "my note",
     home: FutureBuilder(
@@ -79,6 +80,9 @@ class _MyNoteViewState extends State<MyNoteView> {
                     )
                   ])
         ],
+      ),
+      body: Center(
+        child: Text((FirebaseAuth.instance.currentUser?.email).toString()),
       ),
     );
   }
