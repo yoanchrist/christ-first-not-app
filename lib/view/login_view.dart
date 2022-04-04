@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:my_note_app/firebase_options.dart';
+import 'dart:developer' as devtools show log;
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -53,7 +54,11 @@ class _LoginViewState extends State<LoginView> {
 
               final usercredential = await FirebaseAuth.instance
                   .signInWithEmailAndPassword(email: email, password: password);
-              print(usercredential);
+              devtools.log(usercredential.toString());
+              // Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (context) => Scaffold(
+              //           body: Text(usercredential.toString()),
+              //         )));
             },
             child: Text("Login"),
           ),

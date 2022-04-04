@@ -30,39 +30,45 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-          controller: _email,
-          decoration: InputDecoration(hintText: 'Email.....'),
-          enableSuggestions: true,
-        ),
-        TextField(
-          controller: _password,
-          decoration: InputDecoration(hintText: 'Password....'),
-          enableSuggestions: false,
-          autocorrect: false,
-          obscureText: true,
-        ),
-        TextButton(
-          onPressed: () async {
-            final email = _email.text;
-            final password = _password.text;
+    return Scaffold(
+        appBar: AppBar(title: Text("Register")),
+        body: Column(
+          children: [
+            TextField(
+              controller: _email,
+              decoration: InputDecoration(hintText: 'Email.....'),
+              enableSuggestions: true,
+            ),
+            TextField(
+              controller: _password,
+              decoration: InputDecoration(hintText: 'Password....'),
+              enableSuggestions: false,
+              autocorrect: false,
+              obscureText: true,
+            ),
+            TextButton(
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
 
-            final usercredential = await FirebaseAuth.instance
-                .createUserWithEmailAndPassword(
-                    email: email, password: password);
-            print(usercredential);
-          },
-          child: Text("Register"),
-        ),
-        TextButton(
-            onPressed: () {
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/Login/', (route) => false);
-            },
-            child: const Text("you have an account? Login here"))
-      ],
-    );
+                final usercredential = await FirebaseAuth.instance
+                    .createUserWithEmailAndPassword(
+                        email: email, password: password);
+                final user = FirebaseAuth.instance.currentUser;
+                if (user != null) {
+                  user.sendEmailVerification();
+                }
+                print(usercredential);
+              },
+              child: Text("Register"),
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/Login/', (route) => false);
+                },
+                child: const Text("you have an account? Login here"))
+          ],
+        ));
   }
 }
