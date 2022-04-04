@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:my_note_app/constants/routes.dart';
 import 'package:my_note_app/firebase_options.dart';
 import 'package:my_note_app/view/Verification_view.dart';
 import 'package:my_note_app/view/login_view.dart';
@@ -11,9 +12,9 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     routes: {
-      "/Register/": (context) => const RegisterView(),
-      "/Login/": (context) => const LoginView(),
-      "/notes/": (context) => const MyNoteView(),
+      registerRoute: (context) => const RegisterView(),
+      loginRoute: (context) => const LoginView(),
+      notesRoute: (context) => const MyNoteView(),
     },
     title: "my note",
     home: FutureBuilder(
@@ -33,7 +34,7 @@ void main() {
               } else {
                 return const LoginView();
               }
-              return const Text("Done");
+
             //return const LoginView();
             default:
               return const Scaffold(
@@ -68,7 +69,7 @@ class _MyNoteViewState extends State<MyNoteView> {
                     if (shouldLogOut) {
                       FirebaseAuth.instance.signOut();
                       Navigator.of(context)
-                          .pushNamedAndRemoveUntil("/Login/", (_) => false);
+                          .pushNamedAndRemoveUntil(loginRoute, (_) => false);
                     }
                     break;
                 }
