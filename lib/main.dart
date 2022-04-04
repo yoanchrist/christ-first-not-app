@@ -15,6 +15,7 @@ void main() {
       registerRoute: (context) => const RegisterView(),
       loginRoute: (context) => const LoginView(),
       notesRoute: (context) => const MyNoteView(),
+      verifyEmail: (context) => const VerifyEmailView(),
     },
     title: "my note",
     home: FutureBuilder(
