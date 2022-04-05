@@ -68,7 +68,7 @@ class _MyNoteViewState extends State<MyNoteView> {
                   case MenuOption.logout:
                     final shouldLogOut = await showLogoutDialog(context);
                     if (shouldLogOut) {
-                      FirebaseAuth.instance.signOut();
+                      await FirebaseAuth.instance.signOut();
                       Navigator.of(context)
                           .pushNamedAndRemoveUntil(loginRoute, (_) => false);
                     }
@@ -94,8 +94,8 @@ Future<bool> showLogoutDialog(BuildContext context) {
   return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-            title: Text("LOGOUT"),
-            content: Text('do you realy want to log out?'),
+            title: const Text("LOGOUT"),
+            content: const Text('do you realy want to log out?'),
             actions: [
               TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
